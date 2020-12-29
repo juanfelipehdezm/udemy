@@ -9,6 +9,7 @@ import pandas as pd
 import datetime as dt
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 udemy_data = pd.read_csv("udemy_output_All_Finance__Accounting_p1_p626.csv")
 #print(udemy_data)
@@ -69,8 +70,6 @@ duplicates = udemy_data.duplicated(subset = unique_columns, keep = "first")
 assert duplicates.sum() == 0
 
 """ ------------------------------QUESTIONS TO ANSWER --------------------------------------------"""
-sns.set_style("whitegrid")  #lets set the style for the visualizations.
-
 udemy_data.set_index("published_time", inplace = True)
 udemy_data["final_price"] = udemy_data["price_detail__price_string"]-udemy_data["discount_price__price_string"]
 
@@ -101,3 +100,23 @@ NUM_PUBLISHED_PRACTICE_TESTS -- mean: 0.11 std: 0.6 median: 0.0
 DISCOUNT_PRICE__PRICE_STRING -- mean: 6.62 std: 3.61 median: 6.1
 PRICE_DETAIL__PRICE_STRING -- mean: 62.82 std: 40.65 median: 47.22
 FINAL_PRICE -- mean: 56.2 std: 40.32 median: 41.12 """
+
+sns.set_style("whitegrid")  #lets set the style for the visualizations.
+
+#I think that to avoid some bias its better to take in count courses with more than 50 subs.
+most_rated_course = udemy_courses.sort_values("rating",ascending=False)
+most_rated_course = most_rated_course.query("num_subscribers > 50")
+
+#group_rate_price = most_rated_course.groupby("rating")["final_price"].agg([np.mean,np.max,np.min,np.median]).sort_values("rating",ascending=False)
+#DEFINIR UN RANGO EJE = 5-4,5  BUEN CURSO , ETC ....
+#print(group_rate_price.head())
+
+#Aswe have too many rating opcions I am gonna group que ratings ej : 0-1 = 1
+#1-1.5 = 1.5, 1.5-2 = 2, 2-3 = 3, 3-4 = 4, 4-4.5 = 4.5, 4.5-5 = 5
+
+#0-1 = 1
+r1 = most_rated_course[np.logical_and(most_rated_course["rating"]>=1,most_rated_course["rating"]<=1)]
+#print(r1["rating"].unique)
+#As we con see , the 0-1 category is equal to 1 so lets move to the other one
+
+#1-1.5 = 1.5
