@@ -119,4 +119,38 @@ r1 = most_rated_course[np.logical_and(most_rated_course["rating"]>=1,most_rated_
 #print(r1["rating"].unique)
 #As we con see , the 0-1 category is equal to 1 so lets move to the other one
 
-#1-1.5 = 1.5
+def grouping(num):
+    """
+    
+group the numbers depending on where they belong
+    Parameters
+    ----------
+    num : float or int <= 5
+         number to group
+    Returns
+    -------
+    If the number is in between some range. the function return certain number
+
+    """
+    if num > 1 and num <= 1.5:
+        return 1.5
+    elif num > 1.5 and num <= 2:
+        return 2
+    elif num > 2 and num <= 2.5:
+        return 2.5
+    elif num > 2.5 and num <=3:
+        return 3
+    elif num > 3 and num <=3.5:
+        return 3.5
+    elif num > 3.5 and num <=4:
+        return 4
+    elif num > 4 and num <=4.5:
+        return 4.5
+    else:
+        return 5
+#print(grouping(4))
+most_rated_course["rating"] = most_rated_course["rating"].apply(grouping)
+#print(most_rated_course["rating"].unique)  NICEEEE
+
+#The next step is pass to a new cvs and in jupyter notebook name some visualizations
+
