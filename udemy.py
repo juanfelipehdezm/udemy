@@ -114,11 +114,6 @@ most_rated_course = most_rated_course.query("num_subscribers > 50")
 #Aswe have too many rating opcions I am gonna group que ratings ej : 0-1 = 1
 #1-1.5 = 1.5, 1.5-2 = 2, 2-3 = 3, 3-4 = 4, 4-4.5 = 4.5, 4.5-5 = 5
 
-#0-1 = 1
-r1 = most_rated_course[np.logical_and(most_rated_course["rating"]>=1,most_rated_course["rating"]<=1)]
-#print(r1["rating"].unique)
-#As we con see , the 0-1 category is equal to 1 so lets move to the other one
-
 def grouping(num):
     """
     
@@ -153,4 +148,4 @@ most_rated_course["rating"] = most_rated_course["rating"].apply(grouping)
 #print(most_rated_course["rating"].unique)  NICEEEE
 
 #The next step is pass to a new cvs and in jupyter notebook name some visualizations
-
+most_rated_course.to_csv("Udemy_clean.csv")
